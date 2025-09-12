@@ -1,0 +1,68 @@
+@startuml
+title Builder Pattern: Auto y Manual
+
+' ===== Productos =====
+class Car {
+  - seats : int
+  - engine : Engine
+  - tripComputer : boolean
+  - gps : boolean
+  + toString() : String
+}
+
+class Manual {
+  - content : String
+  + addSection(text : String) : void
+  + toString() : String
+}
+
+interface Engine {
+  + specs() : String
+}
+class SportEngine implements Engine {
+  + specs() : String
+}
+
+' ===== Builder (interfaz) =====
+interface Builder {
+  + reset() : void
+  + setSeats(count : int) : void
+  + setEngine(engine : Engine) : void
+  + setTripComputer(enabled : boolean) : void
+  + setGPS(enabled : boolean) : void
+}
+
+' ===== Builders concretos =====
+class CarBuilder implements Builder {
+  - car : Car
+  + reset() : void
+  + setSeats(count : int) : void
+  + setEngine(engine : Engine) : void
+  + setTripComputer(enabled : boolean) : void
+  + setGPS(enabled : boolean) : void
+  + getProduct() : Car
+}
+
+class CarManualBuilder implements Builder {
+  - manual : Manual
+  + reset() : void
+  + setSeats(count : int) : void
+  + setEngine(engine : Engine) : void
+  + setTripComputer(enabled : boolean) : void
+  + setGPS(enabled : boolean) : void
+  + getProduct() : Manual
+}
+
+' ===== Director =====
+class Director {
+  + constructSportsCar(b : Builder) : void
+  + constructSUV(b : Builder) : void
+}
+
+' ===== Relaciones =====
+CarBuilder ..> Car : produce
+CarManualBuilder ..> Manual : produce
+Car --> Engine
+SportEngine ..|> Engine
+Director --> Builder : orquesta pasos
+@enduml

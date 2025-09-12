@@ -1,0 +1,76 @@
+@startuml
+title Abstract Factory: GUI multiplataforma (Windows / Mac)
+
+' ===== Productos abstractos =====
+interface Button {
+  + paint() : void
+}
+
+interface Checkbox {
+  + paint() : void
+}
+
+' ===== Productos concretos (Windows) =====
+class WinButton implements Button {
+  + paint() : void
+}
+class WinCheckbox implements Checkbox {
+  + paint() : void
+}
+
+' ===== Productos concretos (Mac) =====
+class MacButton implements Button {
+  + paint() : void
+}
+class MacCheckbox implements Checkbox {
+  + paint() : void
+}
+
+WinButton ..|> Button
+WinCheckbox ..|> Checkbox
+MacButton ..|> Button
+MacCheckbox ..|> Checkbox
+
+' ===== Fábrica abstracta =====
+interface GUIFactory {
+  + createButton() : Button
+  + createCheckbox() : Checkbox
+}
+
+' ===== Fábricas concretas =====
+class WinFactory implements GUIFactory {
+  + createButton() : Button
+  + createCheckbox() : Checkbox
+}
+class MacFactory implements GUIFactory {
+  + createButton() : Button
+  + createCheckbox() : Checkbox
+}
+
+WinFactory ..|> GUIFactory
+MacFactory ..|> GUIFactory
+
+' ===== Cliente =====
+class Application {
+  - factory : GUIFactory
+  - button  : Button
+  - checkbox: Checkbox
+  + Application(factory: GUIFactory)
+  + createUI() : void
+  + paint() : void
+}
+
+class ApplicationConfigurator {
+  + main(args: String[]) : void
+}
+
+Application --> GUIFactory : usa
+Application ..> Button     : crea/usa
+Application ..> Checkbox   : crea/usa
+
+note right of GUIFactory
+Abstract Factory:
+- Declara creadores de familia (Button, Checkbox)
+- Asegura consistencia por variante (Win/Mac)
+end note
+@enduml

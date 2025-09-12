@@ -1,0 +1,54 @@
+@startuml
+title Prototype Pattern con Registro de Prototipos
+
+abstract class Shape {
+  - x : int
+  - y : int
+  - color : String
+  + Shape()
+  + Shape(source : Shape)
+  {abstract} + clone() : Shape
+}
+
+class Rectangle extends Shape {
+  - width : int
+  - height : int
+  + Rectangle()
+  + Rectangle(source : Rectangle)
+  + clone() : Shape
+}
+
+class Circle extends Shape {
+  - radius : int
+  + Circle()
+  + Circle(source : Circle)
+  + clone() : Shape
+}
+
+class PrototypeRegistry {
+  - prototypes : Map<String, Shape>
+  + register(name : String, prototype : Shape) : void
+  + create(name : String) : Shape
+}
+
+class Application {
+  - shapes : List<Shape>
+  + Application()
+  + businessLogic() : void
+  + main(args: String[]) : void
+}
+
+Rectangle --|> Shape
+Circle    --|> Shape
+PrototypeRegistry --> Shape : almacena/clona
+Application ..> Shape : usa (polimorfismo)
+Application ..> PrototypeRegistry : opcional
+
+note right of Shape
+Constructor de copia:
+Shape(Shape source)
+- Copia x, y, color
+Método:
++ clone(): Shape
+end note
+@enduml

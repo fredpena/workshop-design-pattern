@@ -1,0 +1,16 @@
+@startuml
+actor User
+participant App
+participant NotificationSender
+participant Notification as Product
+
+User -> App : elegir canal (e.g., "sms")
+App -> NotificationSender : new SMSSender()
+User -> App : enviar("8095550000","Código","Tu OTP es 123456")
+App -> NotificationSender : notify(to,title,body)
+NotificationSender -> NotificationSender : createNotification()
+NotificationSender -> Product : send(to,title,body)
+Product --> NotificationSender : ok
+NotificationSender --> App : ok
+App --> User : confirmación
+@enduml

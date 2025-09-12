@@ -1,0 +1,69 @@
+@startuml
+title Factory Method: Diálogo y Botones multiplataforma
+
+' ==== Productos ====
+interface Button {
+  + render() : void
+  + onClick(f) : void
+}
+
+class WindowsButton implements Button {
+  + render(a, b) : void
+  + onClick(f) : void
+}
+
+class HTMLButton implements Button {
+  + render(a, b) : void
+  + onClick(f) : void
+}
+
+WindowsButton ..|> Button
+HTMLButton ..|> Button
+
+' ==== Creadores (Creators) ====
+abstract class Dialog {
+  {abstract} + createButton() : Button
+  + render() : void
+}
+
+class WindowsDialog extends Dialog {
+  + createButton() : Button
+}
+
+class WebDialog extends Dialog {
+  + createButton() : Button
+}
+
+WindowsDialog --|> Dialog
+WebDialog --|> Dialog
+
+' El factory method de Dialog devuelve un Button (dependencia)
+Dialog ..> Button : «use»\ncreateButton()
+
+' Cada creador concreto instancia su producto concreto
+WindowsDialog ..> WindowsButton : crea
+WebDialog ..> HTMLButton : crea
+
+' ==== Cliente ====
+class Application {
+  - dialog : Dialog
+  + initialize() : void
+  + main() : void
+}
+
+Application --> Dialog : usa
+
+' ==== Notas explicativas ====
+note right of Dialog
+Factory Method:
+- Subclases redefinen createButton()
+- render() invoca createButton() y usa Button
+end note
+
+note bottom of Application
+initialize():
+- según configuración del entorno:
+  - Windows -> WindowsDialog
+  - Web     -> WebDialog
+end note
+@enduml

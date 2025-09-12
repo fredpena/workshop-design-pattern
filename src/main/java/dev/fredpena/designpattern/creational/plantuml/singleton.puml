@@ -1,0 +1,14 @@
+@startuml
+class Database {
+  - static instance : Database
+  - Database()  <<private>>
+  + static getInstance() : Database
+  + query(sql : String) : void
+}
+
+class Application {
+  + main() : void
+}
+
+Application --> Database : usa >
+@enduml

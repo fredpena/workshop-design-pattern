@@ -1,0 +1,22 @@
+@startuml
+class Coche {
+  - marca : String
+  - modelo : String
+  - conductor: Conductor
+  + setConductor(conductor : Conductor) : void
+  + getMarca() : String
+  + mostrarConductor() : void
+}
+
+class Conductor {
+  - nombre : String
+  - licencia : String
+  - coches : List<Coche>
+  + agregarCoche(coche: Coche) : void
+  + mostrarCoches() : void
+  + getNombre() : String
+  + getLicencia() : String
+}
+
+Coche "1" --> "0..*" Conductor : conduce >
+@enduml

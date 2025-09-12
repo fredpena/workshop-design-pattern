@@ -1,0 +1,21 @@
+@startuml
+interface Vehiculo {
+  + mover() : void
+  + detener() : void
+}
+
+class Automovil {
+  - marca : String
+  + mover() : void
+  + detener() : void
+}
+
+class Barco {
+  - nombre : String
+  + mover() : void
+  + detener() : void
+}
+
+Automovil ..|> Vehiculo
+Barco ..|> Vehiculo
+@enduml

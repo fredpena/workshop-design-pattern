@@ -1,0 +1,23 @@
+@startuml
+class Persona {
+  - nombre : String
+  - cabeza : Cabeza
+  - cuerpo : Cuerpo
+  + vivir() : void
+}
+
+class Cabeza {
+  - ojos : int
+  - cabello : String
+  + pensar() : void
+}
+
+class Cuerpo {
+  - brazos : int
+  - piernas : int
+  + moverse() : void
+}
+
+Persona *-- Cabeza : tiene >
+Persona *-- Cuerpo : tiene >
+@enduml

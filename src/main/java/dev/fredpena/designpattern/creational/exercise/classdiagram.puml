@@ -1,0 +1,51 @@
+@startuml
+title Notificaciones con Factory Method
+
+' ==== Producto ====
+interface Notification {
+  + send(to : String, title : String, body : String) : void
+}
+
+class EmailNotification implements Notification {
+  + send(to, title, body) : void
+}
+class SMSNotification implements Notification {
+  + send(to, title, body) : void
+}
+class PushNotification implements Notification {
+  + send(to, title, body) : void
+}
+
+EmailNotification ..|> Notification
+SMSNotification   ..|> Notification
+PushNotification  ..|> Notification
+
+' ==== Creador (Creator) ====
+abstract class NotificationSender {
+  + notify(to : String, title : String, body : String) : void
+  {abstract} # createNotification() : Notification
+}
+
+' ==== Creadores concretos ====
+class EmailSender extends NotificationSender {
+  # createNotification() : Notification
+}
+class SMSSender extends NotificationSender {
+  # createNotification() : Notification
+}
+class PushSender extends NotificationSender {
+  # createNotification() : Notification
+}
+
+EmailSender --|> NotificationSender
+SMSSender    --|> NotificationSender
+PushSender   --|> NotificationSender
+
+' ==== Cliente ====
+class App {
+  + main(args : String[]) : void
+}
+
+App --> NotificationSender : usa
+NotificationSender ..> Notification : «use» createNotification()
+@enduml

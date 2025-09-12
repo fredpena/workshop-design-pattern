@@ -1,0 +1,15 @@
+@startuml
+class Automovil {
+  - marca : String
+  + conducir(gasolina : Gasolina) : void
+}
+
+class Gasolina {
+  - tipo : String
+  - octanaje : int
+  + getTipo() : void
+  + getOctanaje() : void
+}
+
+Automovil ..> Gasolina : usa >
+@enduml

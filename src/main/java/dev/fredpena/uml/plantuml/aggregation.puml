@@ -1,0 +1,21 @@
+@startuml
+class Conductor {
+  - nombre : String
+  - ropa : Ropa
+  - sombrero : Sombrero
+  + mostrarEquipamiento() : void
+}
+
+class Ropa {
+  - color : String
+  + getColor() : String
+}
+
+class Sombrero {
+  - tipo : String
+  + getTipo() : String
+}
+
+Conductor o-- Ropa : usa >
+Conductor o-- Sombrero : usa >
+@enduml

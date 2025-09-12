@@ -1,0 +1,29 @@
+@startuml
+class Coche {
+  - nombre : String
+  + conducir() : void
+  + frenar() : void
+  + getNombre() : String
+}
+
+class Autobus {
+  - capacidadPasajeros : int
+  + abrirPuertas() : void
+  + recogerPasajeros() : void
+}
+
+class Taxi {
+  - numeroLicencia : String
+  + cobrarPasaje() : void
+   + encenderRadio() : void
+}
+
+class Automovil {
+  - propietario : int
+  + estacionar() : void
+}
+
+Coche <|-- Autobus
+Coche <|-- Taxi
+Coche <|-- Automovil
+@enduml

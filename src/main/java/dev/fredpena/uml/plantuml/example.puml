@@ -1,0 +1,39 @@
+@startuml
+class Coche {
+  - matricula : String
+  - modelo : String
+}
+
+class Conductor {
+  - nombre : String
+  - licencia : String
+}
+
+class Motor {
+  - numeroSerie : String
+}
+
+class Rueda {
+  - medida : String
+}
+
+class Taller {
+  - nombre : String
+}
+
+class Vehiculo {
+  + arrancar()
+  + frenar()
+}
+
+interface Mantenimiento {
+  + revisar()
+}
+
+Vehiculo <|-- Coche
+Coche *-- Motor          : tiene >
+Coche o-- Rueda          : incluye >
+Coche "1" --> "0..*" Conductor : conduce >
+Coche ..> Taller         : se repara en >
+Coche ..|> Mantenimiento
+@enduml
