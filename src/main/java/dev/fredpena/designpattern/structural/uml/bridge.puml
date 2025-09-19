@@ -1,0 +1,48 @@
+@startuml
+title Bridge Pattern: Remote Controls (Abstracción) ↔ Devices (Implementación)
+
+' ===== Implementación =====
+interface Device {
+  + isEnabled() : boolean
+  + enable() : void
+  + disable() : void
+  + getVolume() : int
+  + setVolume(percent : int) : void
+  + getChannel() : int
+  + setChannel(channel : int) : void
+}
+
+class Tv implements Device {
+  - on : boolean
+  - volume : int
+  - channel : int
+}
+
+class Radio implements Device {
+  - on : boolean
+  - volume : int
+  - channel : int
+}
+
+' ===== Abstracción =====
+class RemoteControl {
+  # device : Device
+  + RemoteControl(device : Device)
+  + togglePower() : void
+  + volumeDown() : void
+  + volumeUp() : void
+  + channelDown() : void
+  + channelUp() : void
+}
+
+class AdvancedRemoteControl extends RemoteControl {
+  + AdvancedRemoteControl(device : Device)
+  + mute() : void
+}
+
+RemoteControl --> Device : delega
+
+' ===== Cliente =====
+class Client
+Client --> RemoteControl : usa
+@enduml
