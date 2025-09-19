@@ -1,0 +1,35 @@
+@startuml
+title Patrón Adapter: Piezas cuadradas en hoyos redondos
+
+class RoundHole {
+  - radius : double
+  + RoundHole(radius : double)
+  + getRadius() : double
+  + fits(peg : RoundPeg) : boolean
+}
+
+class RoundPeg {
+  - radius : double
+  + RoundPeg(radius : double)
+  + getRadius() : double
+}
+
+class SquarePeg {
+  - width : double
+  + SquarePeg(width : double)
+  + getWidth() : double
+}
+
+class SquarePegAdapter extends RoundPeg {
+  - peg : SquarePeg
+  + SquarePegAdapter(peg : SquarePeg)
+  + getRadius() : double
+}
+
+RoundHole --> RoundPeg : usa
+SquarePegAdapter --> SquarePeg : envuelve
+
+note bottom of SquarePegAdapter
+return peg.getWidth() * sqrt(2) / 2
+end note
+@enduml
