@@ -1,0 +1,39 @@
+@startuml
+title Flyweight Pattern: Forest (Tree / TreeType / TreeFactory)
+
+' ===== Flyweight (estado intrínseco) =====
+class TreeType {
+  - name : String
+  - color : String
+  - texture : byte[]  ' grande
+  + TreeType(name:String, color:String, texture:byte[])
+  + draw(canvas:Canvas, x:int, y:int) : void
+}
+
+' ===== Factory de flyweights =====
+class TreeFactory {
+  - static treeTypes : Map<String, TreeType>
+  + static getTreeType(name:String, color:String, textureKey:String) : TreeType
+}
+
+' ===== Contexto (estado extrínseco) =====
+class Tree {
+  - x : int
+  - y : int
+  - type : TreeType
+  + Tree(x:int, y:int, type:TreeType)
+  + draw(canvas:Canvas) : void
+}
+
+' ===== Cliente =====
+class Forest {
+  - trees : List<Tree>
+  + plantTree(x:int, y:int, name:String, color:String, textureKey:String) : void
+  + draw(canvas:Canvas) : void
+}
+
+TreeFactory ..> TreeType : crea / reutiliza
+Tree --> TreeType : referencia (compartido)
+Forest "1" o-- "0..*" Tree : contiene
+
+@enduml
