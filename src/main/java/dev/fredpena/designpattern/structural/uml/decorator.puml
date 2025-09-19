@@ -1,0 +1,50 @@
+@startuml
+title Decorator Pattern: DataSource con Compresión + Cifrado
+
+interface DataSource {
+  + writeData(data : String) : void
+  + readData() : String
+}
+
+class FileDataSource implements DataSource {
+  - filename : String
+  + FileDataSource(filename : String)
+  + writeData(data : String) : void
+  + readData() : String
+}
+
+class DataSourceDecorator implements DataSource {
+  # wrappee : DataSource
+  + DataSourceDecorator(source : DataSource)
+  + writeData(data : String) : void
+  + readData() : String
+}
+
+class EncryptionDecorator extends DataSourceDecorator {
+  + EncryptionDecorator(source : DataSource)
+  + writeData(data : String) : void
+  + readData() : String
+}
+
+class CompressionDecorator extends DataSourceDecorator {
+  + CompressionDecorator(source : DataSource)
+  + writeData(data : String) : void
+  + readData() : String
+}
+
+class SalaryManager {
+  - source : DataSource
+  + SalaryManager(source : DataSource)
+  + load() : String
+  + save(data : String) : void
+}
+
+SalaryManager --> DataSource : usa
+
+note right of DataSourceDecorator
+Delegación:
+- writeData/readData delegan en wrappee
+- Decoradores concretos añaden lógica
+  antes/después de delegar
+end note
+@enduml
