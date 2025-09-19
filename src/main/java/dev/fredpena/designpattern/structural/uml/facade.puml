@@ -1,0 +1,42 @@
+@startuml
+title Facade Pattern: VideoConverter oculta el framework complejo
+
+' ====== Subsistema complejo (3rd-party) ======
+class VideoFile
+class CodecFactory {
+  + extract(file : VideoFile) : Codec
+}
+interface Codec
+class OggCompressionCodec implements Codec
+class MPEG4CompressionCodec implements Codec
+class BitrateReader {
+  + read(filename : String, source : Codec) : byte[]
+  + convert(buffer : byte[], dest : Codec) : byte[]
+}
+class AudioMixer {
+  + fix(track : byte[]) : byte[]
+}
+
+VideoFile --> CodecFactory
+CodecFactory ..> Codec
+BitrateReader ..> Codec
+AudioMixer ..> BitrateReader
+
+' ====== Fachada ======
+class VideoConverter {
+  + convert(filename : String, format : String) : File
+}
+
+VideoConverter ..> VideoFile
+VideoConverter ..> CodecFactory
+VideoConverter ..> Codec
+VideoConverter ..> BitrateReader
+VideoConverter ..> AudioMixer
+
+' ====== Cliente ======
+class Application {
+  + main(args : String[]) : void
+}
+Application --> VideoConverter : usa
+
+@enduml
