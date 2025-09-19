@@ -14,4 +14,9 @@ public class WinFactory implements GUIFactory {
     public Checkbox createCheckbox() {
         return new WinCheckbox();
     }
+
+    @Override
+    public TextField createTextField() {
+        return new WinTextField();
+    }
 }

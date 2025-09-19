@@ -14,4 +14,9 @@ public class MacFactory implements GUIFactory {
     public Checkbox createCheckbox() {
         return new MacCheckbox();
     }
+
+    @Override
+    public TextField createTextField() {
+        return new MacTextField();
+    }
 }

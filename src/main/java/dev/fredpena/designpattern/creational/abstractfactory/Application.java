@@ -9,6 +9,7 @@ public class Application {
     private final GUIFactory factory;
     private Button button;
     private Checkbox checkbox;
+    private TextField textField;
 
     public Application(GUIFactory factory) {
         this.factory = factory;
@@ -17,10 +18,18 @@ public class Application {
     public void createUI() {
         this.button = factory.createButton();
         this.checkbox = factory.createCheckbox();
+        this.textField = factory.createTextField();
     }
 
     public void paint() {
         button.paint();
         checkbox.paint();
+        textField.paint();
+    }
+
+    public void delete(){
+        button.paint();
+        checkbox.paint();
+        textField.paint();
     }
 }
