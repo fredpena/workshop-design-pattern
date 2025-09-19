@@ -1,0 +1,36 @@
+@startuml
+title Proxy Pattern: CachedYouTubeClass vs ThirdPartyYouTubeClass
+
+interface ThirdPartyYouTubeLib {
+  + listVideos() : List<Video>
+  + getVideoInfo(id : String) : VideoInfo
+  + downloadVideo(id : String) : byte[]
+}
+
+class ThirdPartyYouTubeClass implements ThirdPartyYouTubeLib {
+  + listVideos() : List<Video>
+  + getVideoInfo(id : String) : VideoInfo
+  + downloadVideo(id : String) : byte[]
+}
+
+class CachedYouTubeClass implements ThirdPartyYouTubeLib {
+  - service : ThirdPartyYouTubeLib
+  - listCache : List<Video>
+  - videoCache : Map<String, VideoInfo>
+  - downloads : Set<String>
+  - needReset : boolean
+  + listVideos() : List<Video>
+  + getVideoInfo(id : String) : VideoInfo
+  + downloadVideo(id : String) : byte[]
+}
+
+class YouTubeManager {
+  - service : ThirdPartyYouTubeLib
+  + YouTubeManager(svc : ThirdPartyYouTubeLib)
+  + renderVideoPage(id : String) : void
+  + renderListPanel() : void
+  + reactOnUserInput() : void
+}
+
+YouTubeManager --> ThirdPartyYouTubeLib : usa
+@enduml
