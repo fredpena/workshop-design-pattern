@@ -5,5 +5,5 @@ package dev.fredpena.designpattern.creational.factorymethod;
  * @created 11/09/2025  - 22:32
  */
 public enum OS {
-    WINDOWS, WEB
+    WINDOWS, WEB, DESKTOP
 }

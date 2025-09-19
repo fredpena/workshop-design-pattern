@@ -9,13 +9,14 @@ public class Application {
     private Dialog dialog;
 
     public void initialize() {
-        OS os = Config.detectOS();
+        OS os = OS.WINDOWS;//Config.detectOS();
         System.out.println("[Application] OS detectado: " + os);
 
         switch (os) {
             case WINDOWS -> dialog = new WindowsDialog();
-            case WEB     -> dialog = new WebDialog();
-            default      -> throw new IllegalStateException("OS no soportado: " + os);
+            case DESKTOP -> dialog = new DesktopDialog();
+            case WEB -> dialog = new WebDialog();
+            default -> throw new IllegalStateException("OS no soportado: " + os);
         }
     }
 

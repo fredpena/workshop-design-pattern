@@ -17,9 +17,6 @@ class HTMLButton implements Button {
   + onClick(f) : void
 }
 
-WindowsButton ..|> Button
-HTMLButton ..|> Button
-
 ' ==== Creadores (Creators) ====
 abstract class Dialog {
   {abstract} + createButton() : Button
@@ -33,9 +30,6 @@ class WindowsDialog extends Dialog {
 class WebDialog extends Dialog {
   + createButton() : Button
 }
-
-WindowsDialog --|> Dialog
-WebDialog --|> Dialog
 
 ' El factory method de Dialog devuelve un Button (dependencia)
 Dialog ..> Button : «use»\ncreateButton()
