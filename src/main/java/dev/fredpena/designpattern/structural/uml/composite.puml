@@ -1,0 +1,39 @@
+@startuml
+title Composite Pattern: Editor de Formas (Dot, Circle, CompoundGraphic)
+
+interface Graphic {
+  + move(x : int, y : int) : void
+  + draw() : void
+}
+
+class Dot implements Graphic {
+  - x : int
+  - y : int
+  + Dot(x : int, y : int)
+  + move(x : int, y : int) : void
+  + draw() : void
+}
+
+class Circle extends Dot {
+  - radius : int
+  + Circle(x : int, y : int, radius : int)
+  + draw() : void
+}
+
+class CompoundGraphic implements Graphic {
+  - children : List<Graphic>
+  + add(child : Graphic) : void
+  + remove(child : Graphic) : void
+  + move(x : int, y : int) : void
+  + draw() : void
+}
+
+class ImageEditor {
+  - all : CompoundGraphic
+  + load() : void
+  + groupSelected(components : List<Graphic>) : void
+}
+
+CompoundGraphic "1" o-- "0..*" Graphic : contiene
+ImageEditor --> Graphic : usa
+@enduml
