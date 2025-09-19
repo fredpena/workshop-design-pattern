@@ -1,0 +1,25 @@
+@startuml
+title Adapter Pattern - Report Exporter
+
+interface ReportExporter {
+    + exportReport(data:Object) : String
+}
+
+class JsonToXmlAdapter {
+    - thirdParty : ThirdPartyJsonReport
+    + JsonToXmlAdapter(thirdParty: ThirdPartyJsonReport)
+    + exportReport(data:Object) : String
+}
+
+class ThirdPartyJsonReport {
+    + toJson(data:Object) : String
+}
+
+class Client {
+    + main(args:String[]) : void
+}
+
+ReportExporter <|.. JsonToXmlAdapter
+JsonToXmlAdapter --> ThirdPartyJsonReport : usa
+Client ..> ReportExporter : depende
+@enduml

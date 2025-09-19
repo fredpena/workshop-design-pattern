@@ -1,0 +1,46 @@
+@startuml
+title Composite Pattern - UI Components
+
+interface UIComponent {
+    + render(indent:String) : void
+}
+
+class Button {
+    - label : String
+    + Button(label:String)
+    + render(indent:String) : void
+}
+
+class Text {
+    - value : String
+    + Text(value:String)
+    + render(indent:String) : void
+}
+
+class Image {
+    - src : String
+    + Image(src:String)
+    + render(indent:String) : void
+}
+
+class Panel {
+    - name : String
+    - children : List<UIComponent>
+    + Panel(name:String)
+    + add(c:UIComponent) : Panel
+    + remove(c:UIComponent) : Panel
+    + render(indent:String) : void
+}
+
+class Client {
+    + main(args:String[]) : void
+}
+
+UIComponent <|.. Button
+UIComponent <|.. Text
+UIComponent <|.. Image
+UIComponent <|.. Panel
+
+Panel o-- UIComponent : contiene
+Client ..> UIComponent : depende
+@enduml
