@@ -8,11 +8,11 @@ public class CarBuilder implements Builder {
     private Car car;
 
     public CarBuilder() {
-        reset();
+        create();
     }
 
     @Override
-    public void reset() {
+    public void create() {
         this.car = new Car();
     }
 
@@ -38,7 +38,7 @@ public class CarBuilder implements Builder {
 
     public Car getProduct() {
         Car product = this.car;
-        reset(); // listo para otro armado
+        create(); // listo para otro armado
         return product;
     }
 }

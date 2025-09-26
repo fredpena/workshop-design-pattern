@@ -1,0 +1,73 @@
+@startuml
+title Memento Pattern (inner class): Editor ⇄ Snapshot, Commands como Caretakers
+
+class Editor {
+  - text : String
+  - curX  : int
+  - curY  : int
+  - selectionWidth : int
+  + setText(text:String) : void
+  + setCursor(x:int, y:int) : void
+  + setSelectionWidth(w:int) : void
+  + createSnapshot() : Snapshot
+  + toString() : String
+}
+
+' Clase Memento ANIDADA (no expone estado públicamente)
+class Editor::Snapshot {
+  - editor : Editor
+  - text : String
+  - curX : int
+  - curY : int
+  - selectionWidth : int
+  + restore() : void
+}
+
+interface Command {
+  + boolean execute()
+  + void undo()
+}
+
+class ReplaceTextCommand implements Command {
+  - app : Application
+  - editor : Editor
+  - backup : Editor::Snapshot
+  - newText : String
+}
+
+class MoveCursorCommand implements Command {
+  - app : Application
+  - editor : Editor
+  - backup : Editor::Snapshot
+  - x : int
+  - y : int
+}
+
+class SetSelectionWidthCommand implements Command {
+  - app : Application
+  - editor : Editor
+  - backup : Editor::Snapshot
+  - w : int
+}
+
+class CommandHistory {
+  - stack : java.util.Deque<Command>
+  + push(c:Command) : void
+  + pop() : Command
+}
+
+class Application {
+  - editor : Editor
+  - history : CommandHistory
+  + execute(cmd:Command) : void
+  + undo() : void
+}
+
+Editor o-- "inner" Editor::Snapshot
+ReplaceTextCommand ..> Editor::Snapshot : caretaker (backup)
+MoveCursorCommand ..> Editor::Snapshot : caretaker (backup)
+SetSelectionWidthCommand ..> Editor::Snapshot : caretaker (backup)
+
+Application --> CommandHistory
+Application --> Editor
+@enduml

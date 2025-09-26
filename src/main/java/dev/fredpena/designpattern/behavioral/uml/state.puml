@@ -1,0 +1,37 @@
+@startuml
+title State Pattern: AudioPlayer cambia de comportamiento según su estado
+
+class AudioPlayer {
+  - state : State
+  - playing : boolean
+  - volume : int
+  - playlist : List<String>
+  - currentIdx : int
+  + changeState(s:State) : void
+  + clickLock() : void
+  + clickPlay() : void
+  + clickNext(boolean doubleClick) : void
+  + clickPrevious(boolean doubleClick) : void
+  + startPlayback() : void
+  + stopPlayback() : void
+  + nextSong() : void
+  + previousSong() : void
+  + fastForward(int sec) : void
+  + rewind(int sec) : void
+}
+
+abstract class State {
+  # player : AudioPlayer
+  + State(p:AudioPlayer)
+  + clickLock() : void
+  + clickPlay() : void
+  + clickNext(boolean doubleClick) : void
+  + clickPrevious(boolean doubleClick) : void
+}
+
+class LockedState extends State
+class ReadyState extends State
+class PlayingState extends State
+
+AudioPlayer --> State : delega
+@enduml

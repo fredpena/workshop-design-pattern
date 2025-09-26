@@ -1,0 +1,44 @@
+@startuml
+title Observer Pattern: Editor notifica a Logging/Email via EventManager
+
+interface EventListener {
+  + update(filename : String) : void
+}
+
+class EventManager {
+  - listeners : Map<String, List<EventListener>>
+  + subscribe(eventType : String, l : EventListener) : void
+  + unsubscribe(eventType : String, l : EventListener) : void
+  + notify(eventType : String, data : String) : void
+}
+
+class Editor {
+  + events : EventManager
+  - file : File
+  + Editor()
+  + openFile(path : String) : void
+  + saveFile() : void
+}
+
+class LoggingListener implements EventListener {
+  - log : File
+  - message : String
+  + LoggingListener(logFile : String, message : String)
+  + update(filename : String) : void
+}
+
+class EmailAlertsListener implements EventListener {
+  - email : String
+  - message : String
+  + EmailAlertsListener(email : String, message : String)
+  + update(filename : String) : void
+}
+
+class Application {
+  + config() : void
+}
+
+Editor --> EventManager : compone/usa
+EventManager --> EventListener : notifica(*)
+Application --> Editor : configura
+@enduml

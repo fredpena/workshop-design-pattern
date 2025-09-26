@@ -7,7 +7,7 @@ package dev.fredpena.designpattern.creational.builder;
 public class Director {
 
     public void constructSportsCar(Builder builder) {
-        builder.reset();
+        builder.create();
         builder.setSeats(2);
         builder.setEngine(new SportEngine());
         builder.setTripComputer(true);
@@ -15,7 +15,7 @@ public class Director {
     }
 
     public void constructSUV(Builder builder) {
-        builder.reset();
+        builder.create();
         builder.setSeats(7);
         builder.setEngine(() -> "V6 3.5L 290 HP");
         builder.setTripComputer(true);

@@ -1,0 +1,50 @@
+@startuml
+title Chain of Responsibility en GUI (showHelp) + Composite
+
+interface ComponentWithContextualHelp {
+  + showHelp() : void
+}
+
+abstract class Component implements ComponentWithContextualHelp {
+  - tooltipText : String
+  # container : Container
+  + setTooltipText(text : String) : void
+  + setContainer(c : Container) : void
+  + showHelp() : void
+}
+
+abstract class Container  {
+  - children : List<Component>
+  + add(child : Component) : void
+}
+
+class Button extends Component {
+  + Button(x:int, y:int, w:int, h:int, label:String)
+  + showHelp() : void
+}
+
+class Panel extends Container {
+  - modalHelpText : String
+  + Panel(x:int, y:int, w:int, h:int)
+  + setModalHelpText(t:String) : void
+  + showHelp() : void
+}
+
+class Dialog extends Container {
+  - title : String
+  - wikiPageURL : String
+  + Dialog(title:String)
+  + setWikiPageURL(url:String) : void
+  + showHelp() : void
+}
+
+class Application {
+  + createUI() : void
+  + onF1KeyPress() : void
+  - getComponentAtMouseCoords() : Component
+}
+
+Component <|-- Container
+Container "1" o-- "0..*" Component
+Application --> Component : usa (evento F1)
+@enduml

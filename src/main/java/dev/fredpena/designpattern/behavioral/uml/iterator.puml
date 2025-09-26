@@ -1,0 +1,63 @@
+@startuml
+title Iterator Pattern: SocialNetwork + ProfileIterator
+
+' ===== Colección =====
+interface SocialNetwork {
+  + createFriendsIterator(profileId : String) : ProfileIterator
+  + createCoworkersIterator(profileId : String) : ProfileIterator
+}
+
+class Facebook implements SocialNetwork
+class LinkedIn implements SocialNetwork
+
+
+' ===== Iterador =====
+interface ProfileIterator {
+  + getNext() : Profile
+  + hasMore() : boolean
+}
+
+class FacebookIterator implements ProfileIterator {
+  - facebook : Facebook
+  - profileId : String
+  - type : String
+  - currentPosition : int
+  - cache : java.util.List<Profile>
+}
+
+class LinkedInIterator implements ProfileIterator {
+  - linkedIn : LinkedIn
+  - profileId : String
+  - type : String
+  - currentPosition : int
+  - cache : java.util.List<Profile>
+}
+
+' ===== Modelo =====
+class Profile {
+  - id : String
+  - email : String
+  - company : String
+  + getId() : String
+  + getEmail() : String
+  + getCompany() : String
+}
+
+' ===== Cliente =====
+class SocialSpammer {
+  + send(iterator : ProfileIterator, message : String) : void
+}
+
+class Application {
+  - network : SocialNetwork
+  - spammer : SocialSpammer
+  + config() : void
+  + sendSpamToFriends(profile : Profile) : void
+  + sendSpamToCoworkers(profile : Profile) : void
+}
+
+FacebookIterator --> Facebook
+LinkedInIterator --> LinkedIn
+SocialSpammer --> ProfileIterator : usa
+Application --> SocialNetwork : configura/usa
+@enduml

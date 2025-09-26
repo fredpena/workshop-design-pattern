@@ -8,11 +8,11 @@ public class CarManualBuilder implements Builder {
     private Manual manual;
 
     public CarManualBuilder() {
-        reset();
+        create();
     }
 
     @Override
-    public void reset() {
+    public void create() {
         this.manual = new Manual();
         manual.addSection("Introducción: este manual describe el vehículo y sus características.");
     }
@@ -39,7 +39,7 @@ public class CarManualBuilder implements Builder {
 
     public Manual getProduct() {
         Manual product = this.manual;
-        reset(); // listo para otro manual
+        create(); // listo para otro manual
         return product;
     }
 }

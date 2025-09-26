@@ -6,7 +6,7 @@ package dev.fredpena.designpattern.structural.decorator;
  */
 public class ApplicationConfigurator {
     public static void main(String[] args) {
-        boolean enabledEncryption = true;
+        boolean enabledEncryption = false;
         boolean enabledCompression = true;
 
         DataSource source = new FileDataSource("salary.dat");

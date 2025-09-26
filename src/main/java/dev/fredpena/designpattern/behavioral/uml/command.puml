@@ -1,0 +1,56 @@
+@startuml
+title Command Pattern: Editor + History + Undo
+
+abstract class Command {
+  # app : Application
+  # editor : Editor
+  # backup : String
+  + Command(app:Application, editor:Editor)
+  + saveBackup() : void
+  + undo() : void
+  {abstract} + execute() : boolean
+}
+
+class CopyCommand extends Command {
+  + execute() : boolean
+}
+class CutCommand extends Command {
+  + execute() : boolean
+}
+class PasteCommand extends Command {
+  + execute() : boolean
+}
+class UndoCommand extends Command {
+  + execute() : boolean
+}
+
+class CommandHistory {
+  - history : java.util.Deque<Command>
+  + push(c:Command) : void
+  + pop() : Command
+}
+
+class Editor {
+  - text : String
+  + getSelection() : String
+  + deleteSelection() : void
+  + replaceSelection(s:String) : void
+  + getText() : String
+  + setText(s:String) : void
+}
+
+class Application {
+  - clipboard : String
+  - editors : java.util.List<Editor>
+  - activeEditor : Editor
+  - history : CommandHistory
+  + executeCommand(cmd:Command) : void
+  + undo() : void
+  + createUI() : void
+}
+
+Application --> CommandHistory
+Application --> Editor : active
+Command --> Application
+Command --> Editor
+@enduml

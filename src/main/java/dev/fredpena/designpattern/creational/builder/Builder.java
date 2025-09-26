@@ -6,9 +6,13 @@ package dev.fredpena.designpattern.creational.builder;
  */
 
 public interface Builder {
-    void reset();
+    void create();
+
     void setSeats(int count);
+
     void setEngine(Engine engine);
+
     void setTripComputer(boolean enabled);
+
     void setGPS(boolean enabled);
 }

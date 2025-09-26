@@ -1,0 +1,55 @@
+@startuml
+title Mediator Pattern: AuthenticationDialog coordina UI
+
+interface Mediator {
+  + notify(sender : Component, event : String) : void
+}
+
+abstract class Component {
+  # dialog : Mediator
+  + Component(dialog : Mediator)
+  + click() : void
+  + keypress() : void
+}
+
+class Button extends Component {
+  + Button(dialog : Mediator, text : String)
+  + getText() : String
+}
+
+class Textbox extends Component {
+  - text : String
+  + Textbox(dialog : Mediator, placeholder : String)
+  + setText(t:String) : void
+  + getText() : String
+}
+
+class Checkbox extends Component {
+  - checked : boolean
+  + Checkbox(dialog : Mediator, label : String)
+  + isChecked() : boolean
+  + setChecked(v:boolean) : void
+  + check() : void
+}
+
+class AuthenticationDialog implements Mediator {
+  - title : String
+  - loginOrRegisterChkBx : Checkbox
+  - loginUsername : Textbox
+  - loginPassword : Textbox
+  - registrationUsername : Textbox
+  - registrationPassword : Textbox
+  - registrationEmail : Textbox
+  - okBtn : Button
+  - cancelBtn : Button
+  + AuthenticationDialog()
+  + notify(sender:Component, event:String) : void
+  - showLoginForm() : void
+  - showRegisterForm() : void
+}
+
+Component --> Mediator : notifica
+AuthenticationDialog o-- Button
+AuthenticationDialog o-- Textbox
+AuthenticationDialog o-- Checkbox
+@enduml
